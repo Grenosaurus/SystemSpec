@@ -1,4 +1,4 @@
-"""CPU
+"""
  This program is used to check and get the operating systems spec information. These details can later be used 
  for illustrating benchmarking result of a specific program (Made: Jauaries).
 """
