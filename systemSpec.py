@@ -24,9 +24,9 @@ from datetime import datetime
 def ByteScale(bytes, suffix = 'B'):
 
     factor = 1024
-    unit_Format = ["", "K", "M", "G", "T", "P"]
+    data_VolumeUnit = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"]
 
-    for unit in unit_Format:
+    for unit in data_VolumeUnit:
         if(bytes < factor):
             return f'{bytes :.2f}{unit}{suffix}'
         
