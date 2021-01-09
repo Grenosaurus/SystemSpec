@@ -146,7 +146,7 @@ def Disk_Information():
 
 # GPU details
 def GPU_Information():
-    print('GPU Information:')
+    print('\nGPU Information:')
 
     # Getting systems GPU details
     gpu = GPUtil.getGPUs()
