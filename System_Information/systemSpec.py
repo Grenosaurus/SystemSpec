@@ -21,6 +21,7 @@ from datetime import datetime
 def System_Information():
     print('System Information:')
     
+    # System details
     system_name = platform.uname()
     os = system_name.system
     os_Node = system_name.node
@@ -35,6 +36,11 @@ def System_Information():
     print(f' - Release: {os_Release}')
     print(f' - Machine: {os_Machine}')
     print(f' - Processor Family: {os_Process}')
+    
+    # System Boot detail
+    boot_Timestamp = psutil.boot_time()
+    BootTime = datetime.fromtimestamp(boot_Timestamp)
+    print(f'Systems Latest Boot Time: {BootTime.year}-{BootTime.month}-{BootTime.day} {BootTime.hour}:{BootTime.minute}:{BootTime.second}')
 
 
 """
