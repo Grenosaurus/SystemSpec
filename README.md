@@ -3,7 +3,7 @@ Program gives system spec details (CPU, RAM, GPU, Disk, ...). The program can be
 
 Windows:
       
-      python System_Information\systemSpec.py
+      python .\System_Information\systemSpec.py
 
 Linux:
       
