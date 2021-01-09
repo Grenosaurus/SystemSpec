@@ -1,7 +1,7 @@
 psutil
 GPUtil
 platform
-speedtest
+speedtest-cli
 time
 tabulate
 pywin32
