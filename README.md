@@ -1,5 +1,5 @@
 # SystemSpec
-Program gives system spec details (CPU, RAM, GPU, Disk, ...). The program can be used to test the benchmarking of a specific program. Program is operated in the following method
+Program gives system spec details (CPU, RAM, GPU, Disk, ...). The program can be used to test the benchmarking of a specific program. Program is operated in the following method, depending on the operating system (OS).
 
 Windows:
       
