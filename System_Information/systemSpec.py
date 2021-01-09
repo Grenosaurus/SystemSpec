@@ -171,12 +171,12 @@ if __name__ == "__main__":
     end_time = time.time() # End time of the main function
 
     # Delta time
-    Delta_time_seconds = end_time - start_time # Difference between start and end time (defined in seconds)
-    Delta_time_minutes = Delta_time_seconds/60 # Difference between start and end time (defined in minutes) | 1 min = 60 s
+    Delta_time_milliseconds = (end_time - start_time) * 1000 # Difference between start and end time (defined in milliseconds) | 1s = 1000 ms
+    Delta_time_minutes = Delta_time_milliseconds/(60 * 1000) # Difference between start and end time (defined in minutes) | 1 min = 60 s
 
     # Round value of delta time
-    Delta_time_seconds_round = round(Delta_time_seconds, 2)
+    Delta_time_milliseconds_round = round(Delta_time_milliseconds, 2)
     Delta_time_minutes_round = round(Delta_time_minutes, 2)
 
     # Prints the time took for the program to run
-    print("\nProgram took %s seconds (~ %s minutes)." % (Delta_time_seconds_round, Delta_time_minutes_round))
+    print(f'\nProgram took: {Delta_time_milliseconds_round}ms (~ {Delta_time_minutes_round}min).')
