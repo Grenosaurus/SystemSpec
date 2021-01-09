@@ -9,6 +9,7 @@ import psutil
 import GPUtil
 import platform
 import speedtest
+import time
 
 from tabulate import tabulate
 from win32com.client import GetObject
@@ -46,7 +47,7 @@ def CPU_Information():
     # Number of Cores and threads
     core_Total = psutil.cpu_count(logical = True)
     core_Physical = psutil.cpu_count(logical = False)
-    print(f'CPU Core: {core_Total}\n CPU Thread: {core_Physical}')
+    print(f'CPU Core: {core_Total}\nCPU Thread: {core_Physical}')
 
     # CPU frequency
     CPU_Freq = psutil.cpu_freq()
@@ -61,9 +62,9 @@ def CPU_Information():
     print('CPU Single Thread Usage:')
     
     for i, percentage in enumerate(core_Percentage):
-        core = i + 1
-        core_UsagePresentage = percentage
-        print(f' - Core {core}: {core_UsagePresentage}%')
+        thread = i + 1
+        thread_UsagePresentage = percentage
+        print(f' - Thread {thread}: {thread_UsagePresentage}%')
 
 
 
@@ -155,9 +156,26 @@ def GPU_Information():
 
 
 def main():
+    # System Spec details
     CPU_Information()
     RAM_Information()
     Disk_Information()
     GPU_Information()
-    
-main()
+
+# Generates teh total time used by teh program to complete
+if __name__ == "__main__":
+    # Time of main function
+    start_time = time.time() # Start time of the main function
+    main()
+    end_time = time.time() # End time of the main function
+
+    # Delta time
+    Delta_time_seconds = end_time - start_time # Difference between start and end time (defined in seconds)
+    Delta_time_minutes = Delta_time_seconds/60 # Difference between start and end time (defined in minutes) | 1 min = 60 s
+
+    # Round value of delta time
+    Delta_time_seconds_round = round(Delta_time_seconds, 2)
+    Delta_time_minutes_round = round(Delta_time_minutes, 2)
+
+    # Prints the time took for the program to run
+    print("\nProgram took %s seconds (~ %s minutes)." % (Delta_time_seconds_round, Delta_time_minutes_round))
