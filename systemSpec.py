@@ -72,7 +72,7 @@ def CPU_Information():
 def RAM_Information():
     print('\nRAM Information:')
 
-    # Memory details
+    # Systems RAM details
     ram_Memory = psutil.virtual_memory()
     ram_Total = ByteScale(ram_Memory.total)
     ram_Available = ByteScale(ram_Memory.available)
