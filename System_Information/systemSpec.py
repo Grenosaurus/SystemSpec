@@ -16,27 +16,68 @@ from win32com.client import GetObject
 from datetime import datetime
 
 
+
+# Gathering basic informations of the system
+def System_Information():
+    print('System Information:')
+    
+    system_name = platform.uname()
+    os = system_name.system
+    os_Node = system_name.node
+    os_Version = system_name.version
+    os_Release = system_name.release
+    os_Machine = system_name.machine
+    os_Process = system_name.processor
+    
+    print(f'OS: {os}')
+    print(f' - Node: {os_Node}')
+    print(f' - Version: {os_Version}')
+    print(f' - Release: {os_Release}')
+    print(f' - Machine: {os_Machine}')
+    print(f' - Processor Family: {os_Process}')
+
+
+"""
+ Program can also observe the internet connection speed (Upload and Download speed) if wnated.
+"""
+
+
+# Network detail object
+class Network_Information(object):
+    def __init__(self):
+        self.parser = psutil.net_if_addrs()
+        self.speed_parser = speedtest.Speedtest()
+        self.interfaces = self.interface()[0]
+    
+    # Interface detail of the internet
+    def interface(self):
+        interfaces = []
+        for interface_name, _ in self.parser.items():
+            interfaces.append(str(interface_name))
+
+        return interfaces
+    
+    # Stores the details into a table and returns the table
+    def __repr__(self):
+        interface = self.interfaces
+        download = str(f'{self.speed_parser.download() / 1_000_000 :.2f}Mbps')
+        upload = str(f'{self.speed_parser.upload() / 1_000_000 :.2f}Mbps')
+        
+        data = {'Interface' : [interface], 'Download Speed' : [download], 'Upload Speed' : [upload]}
+        data_table = tabulate(data, headers = 'keys', tablefmt = 'pretty')
+        
+        return data_table
+
+
+
 """
  Due to a certain module the program can only identify NVIDIA GPU drivers and not AMD GPU drivers.
 """
 
 
-# Converst large numbers of bytes into scaled Byte format
-def ByteScale(bytes, suffix = 'B'):
-
-    factor = 1024
-    data_VolumeUnit = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"]
-
-    for unit in data_VolumeUnit:
-        if(bytes < factor):
-            return f'{bytes :.2f}{unit}{suffix}'
-        
-        bytes = bytes / factor
-
-
 # CPU details
 def CPU_Information():
-    print('CPU Information:')
+    print('\nCPU Information:')
     
     # CPU name
     root_winmgmts = GetObject('winmgmts:root\cimv2')
@@ -68,6 +109,18 @@ def CPU_Information():
     print(f'CPU Total Core Usage: {core_UsageTotal}%')
 
 
+# Converst large numbers of bytes into scaled Byte format
+def ByteScale(bytes, suffix = 'B'):
+
+    factor = 1024
+    data_VolumeUnit = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"]
+
+    for unit in data_VolumeUnit:
+        if(bytes < factor):
+            return f'{bytes :.2f}{unit}{suffix}'
+        
+        bytes = bytes / factor
+
 
 # RAM details
 def RAM_Information():
@@ -98,7 +151,6 @@ def RAM_Information():
     print(f' - Free Memory: {ram_SwapFree}')
     print(f' - Memory Used: {ram_SwapUse}')
     print(f' - Usage Percentage: {ram_SwapPrecent}%')
-
 
 
 # Memory Disk details
@@ -143,25 +195,43 @@ def Disk_Information():
     print(f' - Disk Total Write: {disk_write}')
 
 
-
 # GPU details
 def GPU_Information():
     print('\nGPU Information:')
 
-    # Getting systems GPU details
+    # Getting systems GPU
     gpu = GPUtil.getGPUs()
-    list
+    
+    # One or multiple GPU in the system
+    for gpu_i in gpu:
+        gpu_Name = gpu_i.name
+        gpu_Load = gpu_i.load * 100 # In percentage [%]
+        gpu_TotalMemory = ByteScale(gpu_i.memoryTotal)
+        gpu_UsedMemory = ByteScale(gpu_i.memoryUsed)
+        gpu_FreeMemory = ByteScale(gpu_i.memoryFree)
+        gpu_Temperature = gpu_i.temperature # In celcius [C]
+        
+        print(f'GPU: {gpu_Name}')
+        print(f' - GPU Load: {gpu_Load}%')
+        print(f' - Total Memory: {gpu_TotalMemory}')
+        print(f' - Used Memory: {gpu_UsedMemory}')
+        print(f' - Free Memory: {gpu_FreeMemory}')
+        print(f' - Temperature: {gpu_Temperature}\N{DEGREE SIGN}C')
 
-
-
-
+  
 
 def main():
+    System_Information()
+    
     # System Spec details
     CPU_Information()
     RAM_Information()
     Disk_Information()
     GPU_Information()
+    
+    # Network speed (Optional)
+    Network = Network_Information()
+    print(f'\n {Network}')
 
 # Generates teh total time used by teh program to complete
 if __name__ == "__main__":
@@ -179,4 +249,4 @@ if __name__ == "__main__":
     Delta_time_minutes_round = round(Delta_time_minutes, 2)
 
     # Prints the time took for the program to run
-    print(f'\nProgram took: {Delta_time_milliseconds_round}ms (~ {Delta_time_minutes_round}min).')
+    print(f'\nProgram took: {Delta_time_milliseconds_round}ms (~ {Delta_time_minutes_round}min).\n')
