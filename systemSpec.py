@@ -43,10 +43,10 @@ def CPU_Information():
     CPU_Name = cpu[0].name
     print(f'CPU: {CPU_Name}')
 
-    # Number of physical and total cores
+    # Number of Cores and threads
     core_Total = psutil.cpu_count(logical = True)
     core_Physical = psutil.cpu_count(logical = False)
-    print(f'CPU Core Number (N)\nTotal: {core_Total}\nPhysical: {core_Physical}')
+    print(f'CPU Core: {core_Total}\n CPU Thread: {core_Physical}')
 
     # CPU frequency
     CPU_Freq = psutil.cpu_freq()
@@ -58,7 +58,7 @@ def CPU_Information():
     core_Percentage = psutil.cpu_percent(percpu = True, interval = 1)
     
     print(f'CPU total Core Usage: {core_UsageTotal}%')
-    print('CPU Single Core Usage:')
+    print('CPU Single Thread Usage:')
     
     for i, percentage in enumerate(core_Percentage):
         core = i + 1
