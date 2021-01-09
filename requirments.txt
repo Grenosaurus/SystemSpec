@@ -1,0 +1,8 @@
+psutil
+GPUtil
+platform
+speedtest
+time
+tabulate
+pywin32
+datetime
