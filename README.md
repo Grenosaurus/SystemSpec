@@ -1,8 +1,12 @@
 # SystemSpec
 Program gives system spec details (CPU, RAM, GPU, Disk, ...). The program can be used to test the benchmarking of a specific program. Program is operated in the following method:
+
 Windows:
+      
       python systemSpec.py
+
 Linux:
+      
       python3 systemSpec.py
 
 
